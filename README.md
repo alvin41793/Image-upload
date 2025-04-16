@@ -1,24 +1,34 @@
 # Image Upload Service
 
-一个基于 Golang 的图片上传服务，支持本地存储与阿里云 OSS，具备限流、日志、配置模块、结构化响应等功能。
+一个基于 golong + gin 的图片上传服务，支持本地｜阿里云 OSS存储，扩展能力强
+
+
 
 ## ✨ 功能特性
 
-- 支持图片上传接口（支持格式校验）
-- 本地存储 & 阿里云 OSS 支持
-- 用户请求频率限制（基于 IP 限流）
-- 统一结构化响应体
-- 配置文件支持多环境
+- 图片上传api（支持图片格式校验、支持跨域请求、基于ip的限流访问）
+- 存储方式动态配置 ，目前支持本地 & 阿里云 OSS（可扩展七牛云、S3）
+- 统一结构化响应体（可优化）
 - 模块化架构，便于扩展与维护
-- 统一日志记录，支持结构化输出
+- 统一日志记录，支持结构化输出（可以升级成支持分布式）
 
-## 📦 技术栈
 
-- Go 1.22+
-- Gin Web Framework
-- 阿里云 OSS SDK
-- Uber Zap 日志库
-- 单元测试 & 中间件支持
+## 关于go环境
+
+要构建 Lotus，您需要安装[Go 1.22.7 或更高版本](https://golang.org/dl/)：
+
+```
+wget -c https://golang.org/dl/go1.22.7.linux-amd64.tar.gz -O - | sudo tar -xz -C /usr/local
+```
+
+**提示：** 你需要将其添加`/usr/local/go/bin`到你的路径中。对于大多数 Linux 发行版，你可以运行以下命令：
+
+```
+echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.bashrc && source ~/.bashrc
+```
+
+如果遇到困难，请参阅[官方 Golang 安装说明。](https://golang.org/doc/install)
+
 
 ## 🛠️ 项目结构
 
@@ -39,7 +49,6 @@
 ├── go.mod  // Go语言模块管理，管理项目依赖
 └── README.md  // 项目说明文档，介绍功能、使用和安装等
 ```
-
 
 
 ## 🚀 快速开始
@@ -95,7 +104,6 @@ go run cmd/main.go --config ./config.default.yaml
 ```
 
 
-
 ### 4. 头像上传接口
 
 #### 接口信息
@@ -117,7 +125,6 @@ curl -X POST http://localhost:8080/api/v1/avatar/upload \
 ```
 
 
-
 ## 🧹 后续规划
 
 - ✅ 添加用户身份验证
@@ -125,4 +132,5 @@ curl -X POST http://localhost:8080/api/v1/avatar/upload \
 - ✅ 丰富测试用例
 - ✅ 引入 Swagger 文档生成
 - ✅ 支持多存储后端（七牛云、S3 等）
+- ✅ 微服务架构改造（架构拆分、接口设计、服务治理、安全、性能和容器化部署）
 - ...
