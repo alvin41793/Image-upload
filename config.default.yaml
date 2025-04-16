@@ -1,0 +1,25 @@
+server:
+  port: ":8080" # 服务端口
+oss:
+  enable: false # 是否启用 OSS
+  endpoint: ""
+  access_key: ""
+  secret: ""
+  bucket: ""
+  domain: ""
+  dir: ""
+log:
+  dir: "./logs"  # 日志文件默认保存路径
+  keep_days: 7    # 保留最近多少天的日志
+  level: "info"  # 日志级别
+
+limiter:
+  rate: 1     # 每秒请求数
+  burst: 3    # 最多积攒3个
+
+upload:
+  dir: "./uploads"
+  max_size_mb: 5     # 限制上传文件大小（MB）
+  allowed_types: # 允许上传的文件类型
+    - .jpg
+    - .png
