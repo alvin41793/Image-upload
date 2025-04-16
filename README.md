@@ -22,8 +22,9 @@
 
 ## 🛠️ 项目结构
 
+```
 ├── app/
-│   ├── app.go  // 应用相关初始化或通用功能函数
+│   ├── app.go  // 配置文件、日志初始化等
 │   └── main.go  // 程序主入口，启动应用
 ├── internal/
 │   ├── config/  // 配置读取、解析与模型定义
@@ -37,6 +38,9 @@
 ├── config.default.yaml  // 项目默认配置文件
 ├── go.mod  // Go语言模块管理，管理项目依赖
 └── README.md  // 项目说明文档，介绍功能、使用和安装等
+```
+
+
 
 ## 🚀 快速开始
 
@@ -45,72 +49,80 @@
 ```bash
 git clone https://github.com/alvin41793/Image-upload.git
 cd Image-upload
+```
 
+### 2. 配置文件
 
-2 配置文件
-修改 config.default.yaml 来配置服务端口、本地路径、阿里云 OSS 等：
+修改 `config.default.yaml` 来配置服务端口、本地路径、阿里云 OSS 等：
 
+```yaml
 server:
-  port: ":8080" # 服务端口
+  port: ":8080"          # 服务端口
+
 oss:
-  enable: false # 是否启用 OSS
-  endpoint: ""
-  access_key: ""
-  secret: ""
-  bucket: ""
-  domain: ""
-  dir: ""
+  enable: false          # 是否启用 OSS
+  endpoint: ""           # OSS endpoint
+  access_key: ""         # OSS access key
+  secret: ""             # OSS secret key
+  bucket: ""             # OSS bucket 名称
+  domain: ""             # OSS 域名
+  dir: ""                # 上传目录
+
 log:
-  dir: "./logs"  # 日志文件默认保存路径
-  keep_days: 7    # 保留最近多少天的日志
-  level: "info"  # 日志级别
+  dir: "./logs"          # 日志文件默认保存路径
+  keep_days: 7           # 保留最近多少天的日志
+  level: "info"          # 日志级别
 
 limiter:
-  rate: 1     # 每秒请求数
-  burst: 3    # 最多积攒3个
+  rate: 1                # 每秒请求数
+  burst: 3               # 最多积攒3个请求
 
 upload:
-  dir: "./uploads"
-  max_size_mb: 5     # 限制上传文件大小（MB）
-  allowed_types: # 允许上传的文件类型
+  dir: "./uploads"       # 上传文件存储路径
+  max_size_mb: 5         # 限制上传文件大小（MB）
+  allowed_types:        # 允许上传的文件类型
     - .jpg
     - .png
 
-3. 运行项目
-go run cmd/main.go -config ./config.default.yaml
+```
 
-默认访问接口：
+### 3. 运行项目
 
-# 头像上传接口
+运行以下命令启动服务：
 
-## 接口信息
+```bash
+go run cmd/main.go --config ./config.default.yaml
+```
+
+
+
+### 4. 头像上传接口
+
+#### 接口信息
+
 - **接口地址**：`http://localhost:8080/api/v1/avatar/upload`
 - **请求方法**：`POST`
 
-## 请求参数
-| 参数名 | 参数类型 | 是否必填 | 描述 |
-| ---- | ---- | ---- | ---- |
-| avatar | 文件 | 是 | 要上传的头像文件，支持的文件格式为图片（如 JPEG、PNG 等） |
+#### 请求参数
 
-## 请求示例（使用 curl）
+| 参数名 | 参数类型 | 是否必填 | 描述                                                      |
+| ------ | -------- | -------- | --------------------------------------------------------- |
+| avatar | 文件     | 是       | 要上传的头像文件，支持的文件格式为图片（如 JPEG、PNG 等） |
+
+#### 请求示例（使用 curl）
+
 ```bash
 curl -X POST http://localhost:8080/api/v1/avatar/upload \
   -F "avatar=@/path/to/your/image.jpg"
+```
 
 
 
-🧹 后续规划
-✅ 添加用户身份验证
+## 🧹 后续规划
 
-✅ 添加断点续传 & 进度反馈
-
-✅ 丰富测试用例
-
-✅ 引入 Swagger 文档生成
-
-✅ 支持多存储后端（七牛云、S3 等）
-
-
-
-
-
+- ✅ 添加用户身份验证
+- ✅ 添加断点续传 & 进度反馈
+- ✅ 丰富测试用例
+- ✅ 引入 Swagger 文档生成
+- ✅ 支持多存储后端（七牛云、S3 等）
+- ...
