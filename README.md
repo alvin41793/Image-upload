@@ -33,10 +33,10 @@ echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.bashrc && source ~/.bashrc
 ## 🛠️ 项目结构
 
 ```
-├── app/
-│   ├── app.go  // 配置文件、日志初始化等
+├── cmd/
 │   └── main.go  // 程序主入口，启动应用
 ├── internal/
+│   ├── app.go  // 配置文件、日志初始化等
 │   ├── config/  // 配置读取、解析与模型定义
 │   ├── handler/  // 处理HTTP请求，接收请求并返回响应
 │   ├── logger/  // 日志模块，负责全局日志记录与切割
@@ -100,7 +100,8 @@ upload:
 运行以下命令启动服务：
 
 ```bash
-go run cmd/main.go --config ./config.default.yaml
+go run cmd/main.go                                    #默认配置文件
+go run cmd/main.go --config /path/to/your/config.yaml #指定配置文件
 ```
 
 
@@ -113,9 +114,9 @@ go run cmd/main.go --config ./config.default.yaml
 
 #### 请求参数
 
-| 参数名 | 参数类型 | 是否必填 | 描述                                                      |
-| ------ | -------- | -------- | --------------------------------------------------------- |
-| avatar | 文件     | 是       | 要上传的头像文件，支持的文件格式为图片（如 JPEG、PNG 等） |
+| 参数名    | 参数类型 | 是否必填 | 描述                                |
+|--------|------|------|-----------------------------------|
+| avatar | 文件   | 是    | 要上传的头像文件，支持的文件格式为图片（如 JPEG、PNG 等） |
 
 #### 请求示例（使用 curl）
 
