@@ -1,11 +1,14 @@
 package middleware
 
 import (
+	"fmt"
 	"github.com/alvin41793/Image-upload/internal/config"
+	"github.com/alvin41793/Image-upload/internal/logger"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 )
 
 func init() {
@@ -41,12 +44,19 @@ func init() {
 
 	// 将测试配置应用到全局配置管理器
 	config.InitGlobal(testConfig)
+	// 解决 logger.L() 是 nil 的问题
+	err := logger.Init()
+	if err != nil {
+		fmt.Println("日志初始化失败")
+		return
+	}
 }
 
 // TestRateLimitMiddleware 测试速率限制中间件的效果。
 // 该测试用例旨在验证RateLimitMiddleware是否能够正确地限制请求速率。
 // 它通过模拟多个GET请求来触发速率限制，并检查响应状态码以确定限流是否生效
 func TestRateLimitMiddleware(t *testing.T) {
+
 	gin.SetMode(gin.TestMode)
 
 	r := gin.New()
@@ -57,6 +67,9 @@ func TestRateLimitMiddleware(t *testing.T) {
 
 	// 模拟多次请求触发限流
 	for i := 0; i < 10; i++ {
+		if i == 5 {
+			time.Sleep(2 * time.Second)
+		}
 		req := httptest.NewRequest("GET", "/ping", nil)
 		req.RemoteAddr = "127.0.0.1:12345"
 		resp := httptest.NewRecorder()

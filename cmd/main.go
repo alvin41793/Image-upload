@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/alvin41793/Image-upload/internal/app"
 )
 
 func main() {
@@ -13,7 +14,7 @@ func main() {
 	fmt.Println("Loading config from:", *configPath)
 
 	// 初始化应用
-	application, err := NewApp(*configPath)
+	application, err := app.NewApp(*configPath)
 	if err != nil {
 		fmt.Printf("❌ App initialization failed: %v\n", err)
 		return
